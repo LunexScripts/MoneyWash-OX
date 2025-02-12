@@ -7,6 +7,8 @@ Key Features
 - Adjustable Laundering Percentage – The default laundering percentage is set to 65%, but you can change this in the server Lua file.
 - Secure Processing – Optimized to prevent abuse or exploits.
 - Performance Optimized – Runs at 0.0ms idle, minimal server resource usage.
+- Per 25000 black money, the player must wait 8 seconds (adjustable)
+- Player freezes while washing money
 
 Requirements
 To use this resource, your server must have the following dependencies:
