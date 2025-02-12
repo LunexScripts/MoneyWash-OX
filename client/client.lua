@@ -12,7 +12,6 @@ local modello = {
 }
 exports.ox_target:addModel(modello, options)
 
-
 -- MODELLO PED --
 Citizen.CreateThread(function()
     if not HasModelLoaded('ig_claypain') then
@@ -36,29 +35,39 @@ RegisterNetEvent('pulisci:soldi', function()
         })
 
         if input and #input > 0 then
-            TriggerServerEvent('yd_moneywash', input[1])
+            local amount = tonumber(input[1])
+            local duration = math.ceil(amount / 25000) * 8000 -- 5 seconden per 25000 euro
+            
+            -- Speler wordt gefreezed en doet een emote
+            local playerPed = PlayerPedId()
+            FreezeEntityPosition(playerPed, true)
+            TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_STAND_MOBILE", 0, true)
+            
+            lib.notify({
+                title = 'Witwas',
+                description = 'Geld aan het witwassen...',
+                type = 'success'
+            })
+
+            if lib.progressCircle({
+                duration = duration,
+                position = 'bottom',
+                useWhileDead = false,
+                canCancel = true,
+            }) then
+                TriggerServerEvent('togli:soldi', amount)
+            end
+
+            -- Speler weer vrij en emote stoppen
+            ClearPedTasks(playerPed)
+            FreezeEntityPosition(playerPed, false)
+
+            lib.notify({
+                title = 'Witwas',
+                description = 'Je geld is wit gewassen.',
+                type = 'success'
+            })
         end
-
-        lib.notify({
-            title = 'Witwas',
-            description = 'Geld aan het witwassen.',
-            type = 'success'
-        })
-
-        if lib.progressCircle({
-            duration = 5000,
-            position = 'bottom',
-            useWhileDead = false,
-            canCancel = true,
-        }) then
-            TriggerServerEvent('togli:soldi', input[1])
-        end
-
-        lib.notify({
-            title = 'Witwas',
-            description = 'Je geld is wit gewassen.',
-            type = 'success'
-        })
     else
         lib.notify({
             title = 'Witwas',
