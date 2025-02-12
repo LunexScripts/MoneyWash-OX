@@ -8,20 +8,20 @@ local options = {
 }
 
 local modello = {
-    'ig_claypain'
+    'csb_g'
 }
 exports.ox_target:addModel(modello, options)
 
 -- MODELLO PED --
 Citizen.CreateThread(function()
-    if not HasModelLoaded('ig_claypain') then
-        RequestModel('ig_claypain')
-        while not HasModelLoaded('ig_claypain') do
+    if not HasModelLoaded('csb_g') then
+        RequestModel('csb_g')
+        while not HasModelLoaded('csb_g') do
             Citizen.Wait(5)
         end
     end
 
-    local npc = CreatePed(4, 'ig_claypain', 722.5538, 2330.7517, 50.7504, 5.3307, false, true)
+    local npc = CreatePed(4, 'csb_g', -895.0815, -354.4789, 33.6803, 338.5921, false, true)
     FreezeEntityPosition(npc, true)
     SetEntityInvincible(npc, true)
     SetBlockingOfNonTemporaryEvents(npc, true)
