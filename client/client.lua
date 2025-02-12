@@ -8,20 +8,20 @@ local options = {
 }
 
 local modello = {
-    'csb_g'
+    'ig_claypain'
 }
 exports.ox_target:addModel(modello, options)
 
 -- MODELLO PED --
 Citizen.CreateThread(function()
-    if not HasModelLoaded('csb_g') then
-        RequestModel('csb_g')
-        while not HasModelLoaded('csb_g') do
+    if not HasModelLoaded('ig_claypain') then
+        RequestModel('ig_claypain')
+        while not HasModelLoaded('ig_claypain') do
             Citizen.Wait(5)
         end
     end
 
-    local npc = CreatePed(4, 'csb_g', -895.0815, -354.4789, 33.6803, 338.5921, false, true)
+    local npc = CreatePed(4, 'ig_claypain', 722.5538, 2330.7517, 50.7504, 5.3307, false, true)
     FreezeEntityPosition(npc, true)
     SetEntityInvincible(npc, true)
     SetBlockingOfNonTemporaryEvents(npc, true)
@@ -36,7 +36,16 @@ RegisterNetEvent('pulisci:soldi', function()
 
         if input and #input > 0 then
             local amount = tonumber(input[1])
-            local duration = math.ceil(amount / 25000) * 8000 -- 5 seconden per 25000 euro
+            if amount > blackMoney then
+                lib.notify({
+                    title = 'Witwas',
+                    description = 'Je hebt niet genoeg zwartgeld.',
+                    type = 'error'
+                })
+                return
+            end
+            
+            local duration = math.ceil(amount / 25000) * 5000 -- 5 seconden per 25000 euro
             
             -- Speler wordt gefreezed en doet een emote
             local playerPed = PlayerPedId()
