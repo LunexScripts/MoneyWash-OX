@@ -14,7 +14,3 @@ To use this resource, your server must have the following dependencies:
 - ox_core: Version 1.0.0 or newer
 - ox_lib: Version 3.27.0 or newer
 - ox_target
-
-what can you change?
-
-- The scripts comes originili in dutch
